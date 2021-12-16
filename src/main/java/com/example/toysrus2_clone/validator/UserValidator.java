@@ -2,17 +2,27 @@ package com.example.toysrus2_clone.validator;
 
 import com.example.toysrus2_clone.dto.SignupRequestDto;
 import com.example.toysrus2_clone.model.User;
+import com.example.toysrus2_clone.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+
+@RequiredArgsConstructor
 @Component
 public class UserValidator {
-    public static void checkEmail(Optional<User> foundEmail) {
-        if(foundEmail.isPresent()){
-            throw new IllegalArgumentException ("중복된 이메일이 존재합니다.");
+
+    private final UserRepository userRepository;
+
+    public SignupRequestDto checkForm(SignupRequestDto signupRequestDto) {
+
+        // 아이디 유효성 검사
+        if(signupRequestDto.getUsername().equals("")) {
+            throw new IllegalArgumentException("아이디는 필수 입력 값 입니다");
         }
+
     }
       public static void checkPassword(SignupRequestDto signupRequestDto) {
         if (!signupRequestDto.getPassword().equals(signupRequestDto.getPasswordCheck())) {
@@ -28,6 +38,7 @@ public class UserValidator {
         }
         if(signupRequestDto.getDomain().equals("")) {
             throw new IllegalArgumentException("이메일은 필수 입력 값 입니다");
+
         }
         if(signupRequestDto.getName().equals("")) {
             throw new IllegalArgumentException("이름은 필수 입력 값 입니다");
