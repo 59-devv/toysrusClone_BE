@@ -37,8 +37,8 @@ public class JwtAuthFilter extends AbstractAuthenticationProcessingFilter {
         String tokenPayload = request.getHeader("Authorization");
         if (tokenPayload == null) {
 //            response.sendRedirect("/api/auth/login");
-//            return null;
-            throw new RuntimeException("로그인 정보가 없습니다. 재로그인이 필요합니다.");
+            return null;
+//            throw new IllegalArgumentException("로그인 정보가 없습니다. 재로그인이 필요합니다.");
         }
 
 
