@@ -2,7 +2,6 @@ package com.example.toysrus2_clone.validator;
 
 import com.example.toysrus2_clone.dto.SignupRequestDto;
 import com.example.toysrus2_clone.model.User;
-import com.example.toysrus2_clone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,17 +13,12 @@ import java.util.regex.Pattern;
 @Component
 public class UserValidator {
 
-    private final UserRepository userRepository;
-
-    public SignupRequestDto checkForm(SignupRequestDto signupRequestDto) {
-
-        // 아이디 유효성 검사
-        if(signupRequestDto.getUsername().equals("")) {
-            throw new IllegalArgumentException("아이디는 필수 입력 값 입니다");
+    public void checkEmail(Optional<User> foundEmail) {
+        if(foundEmail.isPresent()){
+            throw new IllegalArgumentException ("중복된 이메일이 존재합니다.");
         }
-
     }
-      public static void checkPassword(SignupRequestDto signupRequestDto) {
+    public void checkPassword(SignupRequestDto signupRequestDto) {
         if (!signupRequestDto.getPassword().equals(signupRequestDto.getPasswordCheck())) {
             throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
         }
@@ -38,7 +32,6 @@ public class UserValidator {
         }
         if(signupRequestDto.getDomain().equals("")) {
             throw new IllegalArgumentException("이메일은 필수 입력 값 입니다");
-
         }
         if(signupRequestDto.getName().equals("")) {
             throw new IllegalArgumentException("이름은 필수 입력 값 입니다");
@@ -48,7 +41,7 @@ public class UserValidator {
             throw new IllegalArgumentException("핸드폰번호는 필수 입력 값 입니다");
         }
         if(signupRequestDto.getAddress().equals("")) {
-            throw new IllegalArgumentException("이메일은 필수 입력 값 입니다");
+            throw new IllegalArgumentException("주소는 필수 입력 값 입니다");
         }
 
         if(!Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,15}$",signupRequestDto.getPassword())) {

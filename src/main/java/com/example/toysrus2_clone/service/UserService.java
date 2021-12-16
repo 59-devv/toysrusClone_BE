@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,13 +25,16 @@ public class UserService {
     @Transactional
     public String userRegister(SignupRequestDto signupRequestDto) {
 
-//        SignupRequestDto result = userValidator.checkForm(signupRequestDto);
+        String username = signupRequestDto.getUsername()+"@"+signupRequestDto.getDomain();
+        Optional<User> foundEmail = userRepository.findByUsername(username);
+        userValidator.checkEmail(foundEmail);
+
+        userValidator.checkPassword(signupRequestDto);
+        String password = passwordEncoder.encode(signupRequestDto.getPassword());
 
         User user = new User(signupRequestDto);
-        String password = passwordEncoder.encode(signupRequestDto.getPassword());
         user.setPassword(password);
         userRepository.save(user);
-
 
         return "회원가입 성공";
     }

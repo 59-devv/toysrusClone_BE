@@ -30,7 +30,7 @@ public class UserController {
     @GetMapping("/api/auth")
     public LoginResponseDto userLogin(@AuthenticationPrincipal UserDetailsImpl userDetails){
         System.out.println(userDetails.getUser().getName());
-        return new LoginResponseDto("success","로그인성공",userDetails.getUsername());
+        return new LoginResponseDto("success","로그인성공",userDetails.getUser().getName());
     }
 
     @PostMapping("api/auth/login")
