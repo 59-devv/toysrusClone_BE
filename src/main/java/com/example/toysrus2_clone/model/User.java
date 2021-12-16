@@ -1,6 +1,7 @@
 package com.example.toysrus2_clone.model;
 
 import com.example.toysrus2_clone.dto.SignupRequestDto;
+import com.example.toysrus2_clone.validator.UserValidator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,9 @@ public class User {
     private String address;
 
     public User(SignupRequestDto requestDto){
+
+        UserValidator.checkForm(requestDto);
+
         this.name= requestDto.getName();
         this.username=requestDto.getUsername()+"@"+requestDto.getDomain();
         this.password=requestDto.getPassword();
