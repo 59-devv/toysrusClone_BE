@@ -33,7 +33,7 @@ public class CartService {
                 ()-> new IllegalArgumentException("상품이 없습니다.")
         );
         //장바구니 확인
-        Cart cart = cartRepository.findByUserIdAndItemId(userId,cartDto.getItemId()).orElse(null);
+        Cart cart = cartRepository.findByUserIdAndItem(userId, item).orElse(null);
 
         if(cart==null) {
             //없다면 상품 추가
