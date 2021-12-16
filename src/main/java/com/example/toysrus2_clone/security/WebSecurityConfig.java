@@ -1,9 +1,7 @@
 package com.example.toysrus2_clone.security;
 
-import com.example.toysrus2_clone.security.filter.FormLoginFilter;
 import com.example.toysrus2_clone.security.filter.JwtAuthFilter;
 import com.example.toysrus2_clone.security.jwt.HeaderTokenExtractor;
-import com.example.toysrus2_clone.security.provider.FormLoginAuthProvider;
 import com.example.toysrus2_clone.security.provider.JWTAuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) {
         // CustomAuthenticationProvider()를 호출하기 위해서 Overriding
         auth
-                .authenticationProvider(formLoginAuthProvider())
+//                .authenticationProvider(formLoginAuthProvider())
                 .authenticationProvider(jwtAuthProvider);
     }
 
@@ -76,7 +74,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/signup").permitAll()
                 .antMatchers("/api/item/**").permitAll()
                 .antMatchers("/api/item**").permitAll()
-                .antMatchers("/api/item/ranking").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -96,28 +93,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          * JwtFilter       : 서버에 접근시 JWT 확인 후 인증을 실시합니다.
          */
         http
-                .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Bean
-    public FormLoginFilter formLoginFilter() throws Exception {
-        FormLoginFilter formLoginFilter = new FormLoginFilter(authenticationManager());
-        formLoginFilter.setFilterProcessesUrl("/api/auth/login");
-        formLoginFilter.setAuthenticationSuccessHandler(formLoginSuccessHandler()); // 인증 성공시 호출할 핸들러 지정
-        formLoginFilter.afterPropertiesSet();
-        return formLoginFilter;
-    }
+//    @Bean
+//    public FormLoginFilter formLoginFilter() throws Exception {
+//        FormLoginFilter formLoginFilter = new FormLoginFilter(authenticationManager());
+//        formLoginFilter.setFilterProcessesUrl("/api/auth/login");
+//        formLoginFilter.setAuthenticationSuccessHandler(formLoginSuccessHandler()); // 인증 성공시 호출할 핸들러 지정
+//        formLoginFilter.afterPropertiesSet();
+//        return formLoginFilter;
+//    }
 
-    @Bean
-    public FormLoginSuccessHandler formLoginSuccessHandler() {
-        return new FormLoginSuccessHandler();
-    }
+//    @Bean
+//    public FormLoginSuccessHandler formLoginSuccessHandler() {
+//        return new FormLoginSuccessHandler();
+//    }
 
-    @Bean
-    public FormLoginAuthProvider formLoginAuthProvider() {
-        return new FormLoginAuthProvider(encodePassword());
-    }
+//    @Bean
+//    public FormLoginAuthProvider formLoginAuthProvider() {
+//        return new FormLoginAuthProvider(encodePassword());
+//    }
 
     private JwtAuthFilter jwtFilter() throws Exception {
         List<String> skipPathList = new ArrayList<>();
@@ -131,7 +128,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("GET,/");
         skipPathList.add("GET,/api/item**");
         skipPathList.add("GET,/api/item/**");
-        skipPathList.add("GET,/api/item/ranking");
         skipPathList.add("POST,/api/crawling");
 
 

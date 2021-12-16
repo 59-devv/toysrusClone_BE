@@ -3,7 +3,6 @@ package com.example.toysrus2_clone.security.provider;
 import com.example.toysrus2_clone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -29,7 +28,7 @@ public class FormLoginAuthProvider implements AuthenticationProvider {
         // UserDetailsService 를 통해 DB에서 username 으로 사용자 조회
         UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException(userDetails.getUsername() + "Invalid password");
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
