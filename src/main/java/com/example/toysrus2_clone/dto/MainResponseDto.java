@@ -1,6 +1,5 @@
 package com.example.toysrus2_clone.dto;
 
-import com.example.toysrus2_clone.model.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +15,5 @@ public class MainResponseDto {
     private List<ChristmasItemDto> christmasProducts;
     private List<TimedealDto> timeLimitProducts;
     private List<HotItemDto> hotProducts;
-    private Page<Item> recommendProducts;
+    private Page<RecommendItemDto> recommendProducts;
 }
