@@ -8,14 +8,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
+@EnableSpringDataWebSupport
 @RequiredArgsConstructor
 public class ItemService {
 
@@ -65,6 +68,7 @@ public class ItemService {
 
         for(Item item:christmasList){
             ChristmasItemDto christmasItemDto = new ChristmasItemDto(item.getId(),item.getItemName(),item.getPrice(),item.getThumbnail());
+            System.out.println("christmas item id : " + item.getId());
             christmasItemDtoList.add(christmasItemDto);
         }
         for(Item item:hotdealList){
@@ -75,9 +79,24 @@ public class ItemService {
             TimedealDto timedealDto = new TimedealDto(item.getId(),item.getItemName(),item.getPrice(),item.getDiscount(),item.getDescription(),item.getThumbnail());
             timedealDtoList.add(timedealDto);
         }
+
         Pageable pageable = PageRequest.of(page-1,size);
         Page<Item> findPage = itemRepository.findAll(pageable);
-        MainResponseDto mainResponseDto = new MainResponseDto(christmasItemDtoList,timedealDtoList,hotItemDtoList,findPage);
+
+        // Pageable 형식을 Dto로 바꾸는 로직
+        Page<RecommendItemDto> dtoPage = findPage.map(new Function<Item, RecommendItemDto>() {
+            @Override
+            public RecommendItemDto apply(Item item) {
+                RecommendItemDto dto = new RecommendItemDto();
+                dto.setItemId(item.getId());
+                dto.setPrice(item.getPrice());
+                dto.setThumbnail(item.getThumbnail());
+                dto.setItemName(item.getItemName());
+                return dto;
+            }
+        });
+
+        MainResponseDto mainResponseDto = new MainResponseDto(christmasItemDtoList,timedealDtoList,hotItemDtoList,dtoPage);
 
         return  mainResponseDto;
 

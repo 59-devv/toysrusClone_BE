@@ -59,4 +59,5 @@ public class Item {
         this.showAreaEnum = ShowAreaEnum.RECOMMEND;
 
     }
+
 }
