@@ -11,60 +11,57 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CartTest {
 
+    private User user1;
+    private Item item1;
+    private Category category1;
+    private Long id;
+    private Long cartCount;
+
+    @BeforeEach
+    void setup() {
+        SignupRequestDto signupRequest = new SignupRequestDto(
+                "정창길",
+                "hanghae99",
+                "hanghae99.kr",
+                "test1234!@",
+                "test1234!@",
+                "01012341234",
+                "스파르타 코딩클럽"
+        );
+
+        user1 = new User(signupRequest);
+        category1 = new Category("크리스마스");
+
+        ItemDto itemDto = new ItemDto(
+                "goodn911",
+                "http://item.ssgcdn.com/62/52/15/item/1000276155262_i1_1200.jpg",
+                "http://www.ssg.com/item/nonSslIframePItemDtlDesc.ssg?itemId=1000018907916",
+                15900L,
+                category1
+                );
+        item1 = new Item(itemDto);
+
+
+        id = 1L;
+        cartCount = 1L;
+    }
+
     @Nested
     @DisplayName("장바구니 정상케이스")
     class 정상케이스 {
-
-        private User user1;
-        private Item item1;
-
-        @BeforeEach
-        void setup() {
-            SignupRequestDto signupRequest = new SignupRequestDto(
-                    "정창길",
-                    "hanghae99",
-                    "hanghae99.kr",
-                    "test1234!@",
-                    "test1234!@",
-                    "01012341234",
-                    "스파르타 코딩클럽"
-            );
-
-            user1 = new User(signupRequest);
-
-
-            ItemDto itemDto = new ItemDto(
-                    "goodn911",
-                    "http://item.ssgcdn.com/62/52/15/item/1000276155262_i1_1200.jpg",
-                    "http://www.ssg.com/item/nonSslIframePItemDtlDesc.ssg?itemId=1000018907916",
-                    15900L,
-                    null
-            );
-            item1 = new Item(itemDto);
-
-
-            Long id = 1L;
-            User user = user1;
-            Item item = item1;
-            Long cartCount = 1L;
-        }
 
         @Test
         void 정상케이스() {
 
             //given
-            Long id = 1L;
-            User user = user1;
-            Item item = item1;
-            Long cartCount = 1L;
 
             //when
-            Cart cart = new Cart(user, cartCount, item);
+            Cart cart = new Cart(user1, cartCount, item1);
 
             //then
             assertNull(cart.getId());
-            assertEquals(user, cart.getUser());
-            assertEquals(item, cart.getItem());
+            assertEquals(user1, cart.getUser());
+            assertEquals(item1, cart.getItem());
             assertEquals(cartCount, cart.getCartCount());
         }
     }
@@ -76,52 +73,15 @@ class CartTest {
         @DisplayName("유저")
         class 유저 {
 
-            private User user1;
-            private Item item1;
-
-            @BeforeEach
-            void setup() {
-                SignupRequestDto signupRequest = new SignupRequestDto(
-                        "정창길",
-                        "hanghae99",
-                        "hanghae99.kr",
-                        "test1234!@",
-                        "test1234!@",
-                        "01012341234",
-                        "스파르타 코딩클럽"
-                );
-
-                user1 = new User(signupRequest);
-
-
-                ItemDto itemDto = new ItemDto(
-                        "goodn911",
-                        "http://item.ssgcdn.com/62/52/15/item/1000276155262_i1_1200.jpg",
-                        "http://www.ssg.com/item/nonSslIframePItemDtlDesc.ssg?itemId=1000018907916",
-                        15900L,
-                        null
-                );
-                item1 = new Item(itemDto);
-
-
-                Long id = 1L;
-                User user = user1;
-                Item item = item1;
-                Long cartCount = 1L;
-            }
-
             @Test
             @DisplayName("유저 확인 안됨")
             void 실패케이스1() {
                 //given
-                Long id = 1L;
-                User user = null;
-                Item item = item1;
-                Long cartCount = 1L;
+                user1 = null;
 
                 //when
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-                    new Cart(user, cartCount, item);
+                    new Cart(user1, cartCount, item1);
                 });
 
                 //then
@@ -133,52 +93,15 @@ class CartTest {
         @DisplayName("상품")
         class 상품 {
 
-            private User user1;
-            private Item item1;
-
-            @BeforeEach
-            void setup() {
-                SignupRequestDto signupRequest = new SignupRequestDto(
-                        "정창길",
-                        "hanghae99",
-                        "hanghae99.kr",
-                        "test1234!@",
-                        "test1234!@",
-                        "01012341234",
-                        "스파르타 코딩클럽"
-                );
-
-                user1 = new User(signupRequest);
-
-
-                ItemDto itemDto = new ItemDto(
-                        "goodn911",
-                        "http://item.ssgcdn.com/62/52/15/item/1000276155262_i1_1200.jpg",
-                        "http://www.ssg.com/item/nonSslIframePItemDtlDesc.ssg?itemId=1000018907916",
-                        15900L,
-                        null
-                );
-                item1 = new Item(itemDto);
-
-
-                Long id = 1L;
-                User user = user1;
-                Item item = item1;
-                Long cartCount = 1L;
-            }
-
             @Test
             @DisplayName("상품 확인 안됨")
             void 실패케이스2() {
                 //given
-                Long id = 1L;
-                User user = user1;
-                Item item = null;
-                Long cartCount = 1L;
+                item1 = null;
 
                 //when
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-                    new Cart(user, cartCount, item);
+                    new Cart(user1, cartCount, item1);
                 });
 
                 //then
@@ -186,17 +109,14 @@ class CartTest {
             }
 
             @Test
-            @DisplayName("상품 0개 담김")
+            @DisplayName("상품 0개 이하로 담김")
             void 실패케이스3() {
                 //given
-                Long id = 1L;
-                User user = user1;
-                Item item = item1;
-                Long cartCount = 0L;
+                cartCount = -10L;
 
                 //when
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-                    new Cart(user, cartCount, item);
+                    new Cart(user1, cartCount, item1);
                 });
 
                 //then

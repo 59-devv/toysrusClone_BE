@@ -1,42 +1,65 @@
 package com.example.toysrus2_clone.model;
 
 import com.example.toysrus2_clone.dto.SignupRequestDto;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class UserTest {
 
+    private Long userId;
+    private String name;
+    private String username;
+    private String domain;
+    private String password;
+    private String passwordCheck;
+    private String phone;
+    private String address;
 
-    @Test
-    @DisplayName("유저 정상케이스")
-    void 정상케이스() {
-        //given
-        Long userId = 1L;
-        String name = "정창길";
-        String username = "hanghae99";
-        String domain = "hanghae99.kr";
-        String password = "test1234!@";
-        String passwordCheck = "test1234!@";
-        String phone = "01012341234";
-        String address = "스파르타 코딩클럽";
+    @BeforeEach
+    void setup() {
+        userId = 1L;
+        name = "정창길";
+        username = "hanghae99";
+        domain = "hanghae99.kr";
+        password = "test1234!@";
+        passwordCheck = "test1234!@";
+        phone = "01012341234";
+        address = "스파르타 코딩클럽";
 
         SignupRequestDto signupRequest = new SignupRequestDto (
                 name, username, domain, password, passwordCheck, phone, address
         );
-
-        //when
-        User user = new User(signupRequest);
-
-        //then
-        assertNull(user.getId());
-        assertEquals(name, user.getName());
-        assertEquals(username + "@" + domain, user.getUsername());
-        assertEquals(password, user.getPassword());
-        assertEquals(phone, user.getPhone());
-        assertEquals(address, user.getAddress());
     }
+
+    @Nested
+    @DisplayName("유저 정상케이스")
+    class 정상케이스 {
+
+        @Test
+        void 정상() {
+            //given
+            SignupRequestDto signupRequest = new SignupRequestDto (
+                    name, username, domain, password, passwordCheck, phone, address
+            );
+
+            //when
+            User user = new User(signupRequest);
+
+            //then
+            assertNull(user.getId());
+            assertEquals(name, user.getName());
+            assertEquals(username + "@" + domain, user.getUsername());
+            assertEquals(password, user.getPassword());
+            assertEquals(phone, user.getPhone());
+            assertEquals(address, user.getAddress());
+        }
+    }
+
 
     @Nested
     @DisplayName("유저 실패케이스")
@@ -48,14 +71,7 @@ class UserTest {
             @DisplayName("이름 빈문자열")
             void 실패케이스1() {
                 //given
-                Long userId = 1L;
-                String name = "";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "test1234!@";
-                String passwordCheck = "test1234!@";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                name = "";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -78,14 +94,7 @@ class UserTest {
             @DisplayName("이메일 아이디 빈문자열")
             void 실패케이스2() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "";
-                String domain = "hanghae99.kr";
-                String password = "test1234!@";
-                String passwordCheck = "test1234!@";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                username = "";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -104,14 +113,7 @@ class UserTest {
             @DisplayName("이메일 아이디 3자 미만")
             void 실패케이스3() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "ha";
-                String domain = "hanghae99.kr";
-                String password = "test1234!@";
-                String passwordCheck = "test1234!@";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                username = "ha";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -130,14 +132,7 @@ class UserTest {
             @DisplayName("이메일 도메인 빈문자열")
             void 실패케이스4() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "";
-                String password = "test1234!@";
-                String passwordCheck = "test1234!@";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                domain = "";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -160,14 +155,7 @@ class UserTest {
             @DisplayName("비밀번호 빈문자열")
             void 실패케이스5() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "";
-                String passwordCheck = "test1234!@";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                password = "";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -186,14 +174,8 @@ class UserTest {
             @DisplayName("비밀번호 8자 미만")
             void 실패케이스6() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "test!@";
-                String passwordCheck = "test!@";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                password = "test!@";
+                passwordCheck = "test!@";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -212,14 +194,8 @@ class UserTest {
             @DisplayName("비밀번호 15자 이상")
             void 실패케이스7() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "test1234567890!@";
-                String passwordCheck = "test1234567890!@";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                password = "test1234567890!@";
+                passwordCheck = "test1234567890!@";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -238,14 +214,8 @@ class UserTest {
             @DisplayName("비밀번호 특수문자없음")
             void 실패케이스8() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "test1234";
-                String passwordCheck = "test1234";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                password = "test1234";
+                passwordCheck = "test1234";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -264,14 +234,8 @@ class UserTest {
             @DisplayName("비밀번호 공백")
             void 실패케이스12() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "test1234 ";
-                String passwordCheck = "test1234 ";
-                String phone = "01012341234";
-                String address = "스파르타 코딩클럽";
+                password = "test1234 ";
+                passwordCheck = "test1234 ";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -294,14 +258,7 @@ class UserTest {
             @DisplayName("휴대폰번호 빈문자열")
             void 실패케이스9() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "test1234!@";
-                String passwordCheck = "test1234!@";
-                String phone = "";
-                String address = "스파르타 코딩클럽";
+                phone = "";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -320,14 +277,7 @@ class UserTest {
             @DisplayName("휴대폰번호 숫자만 입력하지 않음")
             void 실패케이스10() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "test1234!@";
-                String passwordCheck = "test1234!@";
-                String phone = "010-1234-1234";
-                String address = "스파르타 코딩클럽";
+                phone = "010-1234-1234";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
@@ -350,14 +300,7 @@ class UserTest {
             @DisplayName("주소 빈문자열")
             void 실패케이스11() {
                 //given
-                Long userId = 1L;
-                String name = "정창길";
-                String username = "hanghae99";
-                String domain = "hanghae99.kr";
-                String password = "test1234!@";
-                String passwordCheck = "test1234!@";
-                String phone = "01012341234";
-                String address = "           ";
+                address = "           ";
 
                 SignupRequestDto signupRequest = new SignupRequestDto (
                         name, username, domain, password, passwordCheck, phone, address
