@@ -43,8 +43,8 @@ public class CartService {
             cart.addItemCount(cartDto.getCount());
         }
         cartRepository.save(cart);
-
     }
+
     @Transactional
     public CartResponseDto getCart(UserDetailsImpl userDetails) {
         Long userId = userDetails.getUser().getId();
