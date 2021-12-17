@@ -26,6 +26,8 @@ public class Cart {
     @Column
     private Long cartCount;
 
+
+
     public Cart(User user, Long cartCount, Item item) {
         this.user = user;
         this.cartCount = cartCount;

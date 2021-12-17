@@ -24,24 +24,24 @@ public class UserValidator {
         }
     }
     public static void checkForm(SignupRequestDto signupRequestDto) {
-        if(signupRequestDto.getUsername().equals("")) {
-            throw new IllegalArgumentException("아아디는 필수 입력 값 입니다");
+        if(signupRequestDto.getUsername().trim().equals("")) {
+            throw new IllegalArgumentException("아이디는 필수 입력 값 입니다.");
         }
-        if(signupRequestDto.getPassword().equals("")) {
-            throw new IllegalArgumentException("비밀번호는 필수 입력 값 입니다");
+        if(signupRequestDto.getPassword().trim().equals("")) {
+            throw new IllegalArgumentException("비밀번호는 필수 입력 값 입니다.");
         }
-        if(signupRequestDto.getDomain().equals("")) {
-            throw new IllegalArgumentException("이메일은 필수 입력 값 입니다");
+        if(signupRequestDto.getDomain().trim().equals("")) {
+            throw new IllegalArgumentException("이메일은 필수 입력 값 입니다.");
         }
-        if(signupRequestDto.getName().equals("")) {
-            throw new IllegalArgumentException("이름은 필수 입력 값 입니다");
+        if(signupRequestDto.getName().trim().equals("")) {
+            throw new IllegalArgumentException("이름은 필수 입력 값 입니다.");
         }
 
-        if(signupRequestDto.getPhone().equals("")) {
-            throw new IllegalArgumentException("핸드폰번호는 필수 입력 값 입니다");
+        if(signupRequestDto.getPhone().trim().equals("")) {
+            throw new IllegalArgumentException("핸드폰번호는 필수 입력 값 입니다.");
         }
-        if(signupRequestDto.getAddress().equals("")) {
-            throw new IllegalArgumentException("주소는 필수 입력 값 입니다");
+        if(signupRequestDto.getAddress().trim().equals("")) {
+            throw new IllegalArgumentException("주소는 필수 입력 값 입니다.");
         }
 
         if(!Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,15}$",signupRequestDto.getPassword())) {
