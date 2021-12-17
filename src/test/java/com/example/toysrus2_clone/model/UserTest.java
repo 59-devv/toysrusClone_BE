@@ -259,6 +259,32 @@ class UserTest {
                 //then
                 assertEquals("비밀번호는 8자~15자로 영문, 숫자, 특수문자를 포함해야 합니다.", exception.getMessage());
             }
+
+            @Test
+            @DisplayName("비밀번호 공백")
+            void 실패케이스12() {
+                //given
+                Long userId = 1L;
+                String name = "정창길";
+                String username = "hanghae99";
+                String domain = "hanghae99.kr";
+                String password = "test1234 ";
+                String passwordCheck = "test1234 ";
+                String phone = "01012341234";
+                String address = "스파르타 코딩클럽";
+
+                SignupRequestDto signupRequest = new SignupRequestDto (
+                        name, username, domain, password, passwordCheck, phone, address
+                );
+
+                //when
+                Exception exception = assertThrows(IllegalArgumentException.class, ()-> {
+                    new User(signupRequest);
+                });
+
+                //then
+                assertEquals("비밀번호는 공백을 포함할 수 없습니다.", exception.getMessage());
+            }
         }
 
         @Nested
