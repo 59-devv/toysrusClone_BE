@@ -11,6 +11,7 @@ public class CartItemDto {
 
     private Long itemId;
     private String itemName;
+    private String thumbnail;
     private Long price;
     private Long count;
 }
