@@ -69,7 +69,7 @@ public class CartService {
                     () -> new IllegalArgumentException("해당 상품이 없습니다.")
             );
 
-            CartItemDto cartItemDto = new CartItemDto(item.getId(),item.getItemName(),item.getPrice(),cart.getCartCount());
+            CartItemDto cartItemDto = new CartItemDto(item.getId(),item.getItemName(),item.getThumbnail(), item.getPrice(),cart.getCartCount());
             cartItemDtoList.add(cartItemDto);
         }
 
