@@ -17,16 +17,16 @@ class ItemTest {
     @DisplayName("객체생성")
     class creatItem {
 
-        Long id;
-        String itemName;
-        String thumbnail;
-        String imgDetail;
-        Long price;
-        Long discount;
-        String description;
-        ShowAreaEnum showAreaEnum;
-        Category category;
-        Long clickCount;
+        private Long id;
+        private String itemName;
+        private String thumbnail;
+        private String imgDetail;
+        private Long price;
+        private Long discount;
+        private String description;
+        private ShowAreaEnum showAreaEnum;
+        private Category category;
+        private Long clickCount;
 
         @BeforeEach
         void setup() {
