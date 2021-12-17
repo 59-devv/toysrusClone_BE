@@ -2,19 +2,23 @@ package com.example.toysrus2_clone.validator;
 
 import com.example.toysrus2_clone.dto.SignupRequestDto;
 import com.example.toysrus2_clone.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+
+
 @Component
 public class UserValidator {
-    public static void checkEmail(Optional<User> foundEmail) {
+
+    public void checkEmail(Optional<User> foundEmail) {
         if(foundEmail.isPresent()){
             throw new IllegalArgumentException ("중복된 이메일이 존재합니다.");
         }
     }
-      public static void checkPassword(SignupRequestDto signupRequestDto) {
+    public void checkPassword(SignupRequestDto signupRequestDto) {
         if (!signupRequestDto.getPassword().equals(signupRequestDto.getPasswordCheck())) {
             throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
         }
@@ -37,7 +41,7 @@ public class UserValidator {
             throw new IllegalArgumentException("핸드폰번호는 필수 입력 값 입니다");
         }
         if(signupRequestDto.getAddress().equals("")) {
-            throw new IllegalArgumentException("이메일은 필수 입력 값 입니다");
+            throw new IllegalArgumentException("주소는 필수 입력 값 입니다");
         }
 
         if(!Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,15}$",signupRequestDto.getPassword())) {

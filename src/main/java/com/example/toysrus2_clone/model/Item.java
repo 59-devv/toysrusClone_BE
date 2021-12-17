@@ -1,6 +1,7 @@
 package com.example.toysrus2_clone.model;
 
 import com.example.toysrus2_clone.dto.ItemDto;
+import com.example.toysrus2_clone.validator.ItemValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Item {
 
@@ -48,7 +48,24 @@ public class Item {
     @Column
     private Long clickCount;
 
+    public Item(Long id, String itemName, String thumbnail, String imgDetail, Long price, Long discount, String description, ShowAreaEnum showAreaEnum, Category category, Long clickCount) {
+
+        ItemValidator.isValidItems(id,itemName, thumbnail, imgDetail,price,discount,  description, showAreaEnum, category,clickCount);
+        this.id = id;
+        this.itemName = itemName;
+        this.thumbnail = thumbnail;
+        this.imgDetail = imgDetail;
+        this.price = price;
+        this.discount = discount;
+        this.description = description;
+        this.showAreaEnum = showAreaEnum;
+        this.category = category;
+        this.clickCount = clickCount;
+    }
+
     public Item(ItemDto itemDto) {
+        ItemValidator.isValidItem(itemDto);
+
         this.itemName=itemDto.getItemName();
         this.thumbnail=itemDto.getThumbnail();
         this.imgDetail=itemDto.getImgDetail();
