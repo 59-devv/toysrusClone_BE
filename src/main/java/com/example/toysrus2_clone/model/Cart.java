@@ -1,5 +1,6 @@
 package com.example.toysrus2_clone.model;
 
+import com.example.toysrus2_clone.validator.CartValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,9 @@ public class Cart {
 
 
     public Cart(User user, Long cartCount, Item item) {
+
+        CartValidator.checkCart(user, cartCount, item);
+
         this.user = user;
         this.cartCount = cartCount;
         this.item = item;

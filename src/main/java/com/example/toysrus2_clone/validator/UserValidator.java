@@ -44,6 +44,22 @@ public class UserValidator {
             throw new IllegalArgumentException("주소는 필수 입력 값 입니다.");
         }
 
+        if(signupRequestDto.getName().contains(" ")) {
+            throw new IllegalArgumentException("이름은 공백을 포함할 수 없습니다.");
+        }
+
+        if(signupRequestDto.getUsername().contains(" ")) {
+            throw new IllegalArgumentException("아이디는 공백을 포함할 수 없습니다.");
+        }
+
+        if(signupRequestDto.getDomain().contains(" ")) {
+            throw new IllegalArgumentException("도메인은 공백을 포함할 수 없습니다.");
+        }
+
+        if(signupRequestDto.getPassword().contains(" ")) {
+            throw new IllegalArgumentException("비밀번호는 공백을 포함할 수 없습니다.");
+        }
+
         if(!Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,15}$",signupRequestDto.getPassword())) {
             throw new IllegalArgumentException("비밀번호는 8자~15자로 영문, 숫자, 특수문자를 포함해야 합니다.");
         }
