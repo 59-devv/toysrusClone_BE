@@ -94,7 +94,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          */
         http
 
+
 //                .addFilterBefore(formLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

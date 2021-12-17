@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 
-@RequiredArgsConstructor
+
 @Component
 public class UserValidator {
 
